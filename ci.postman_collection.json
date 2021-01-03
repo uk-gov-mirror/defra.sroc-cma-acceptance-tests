@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "4686b6c7-0500-433d-b222-dacda1cfe79d",
+		"name": "CMA acceptance tests CI",
+		"description": "This collection contains a single request solely used by [sroc-cma-acceptance-tests](https://github.com/defra/sroc-cma-acceptance-tests) in its CI build to confirm the project isn't broken!",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82d83f14-463f-47f0-9f92-7eb585c2ece7",
+						"exec": [
+							"pm.test('Returns expected code', () => {",
+							"    pm.expect(pm.response.code).to.equal(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com/",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Make a get request to http://example.com/"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

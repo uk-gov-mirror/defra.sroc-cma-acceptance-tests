@@ -1,0 +1,1002 @@
+{
+	"info": {
+		"_postman_id": "1e78860c-de9f-43f6-b6d6-a3b8608b67f9",
+		"name": "CMA acceptance tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "health",
+					"item": [
+						{
+							"name": "Airbrake",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Returns correct code\", () => {",
+											"    pm.expect(pm.response.code).to.equal(500)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/health/airbrake",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"health",
+										"airbrake"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Database",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Returns correct code\", () => {",
+											"    pm.expect(pm.response.code).to.equal(200)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/health/database",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"health",
+										"database"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List Regimes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Returns correct code', () => {",
+									"    pm.expect(pm.response.code).to.equal(200)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/regimes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"regimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show regime",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Returns correct code', () => {",
+									"    pm.expect(pm.response.code).to.equal(200)",
+									"})",
+									"pm.test('Returns the expected regime', () => {",
+									"    const body = pm.response.json()",
+									"",
+									"    pm.expect(body.regime.slug).to.equal(pm.variables.get('slug'))",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/regimes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"regimes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{slug}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List authorised systems",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Returns correct code\", () => {",
+									"    pm.expect(pm.response.code).to.equal(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{adminToken}}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/authorised-systems",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"authorised-systems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show authorised system",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{adminToken}}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/authorised-systems/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"authorised-systems",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{authSystemId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{adminToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "calculate",
+			"item": [
+				{
+					"name": "Calculate charge",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Returns correct code\", () => {",
+									"    pm.expect(pm.response.code).to.equal(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"periodStart\": \"01-APR-2020\",\n    \"periodEnd\": \"31-MAR-2021\",\n    \"credit\": false,\n    \"billableDays\": 214,\n    \"authorisedDays\": 214,\n    \"volume\": \"3.5865\",\n    \"source\": \"Supported\",\n    \"season\": \"Summer\",\n    \"loss\": \"Low\",\n    \"twoPartTariff\": false,\n    \"compensationCharge\": false,\n    \"eiucSource\": \"Tidal\",\n    \"waterUndertaker\": false,\n    \"regionalChargingArea\": \"Midlands\",\n    \"section126Factor\": 1,\n    \"section127Agreement\": false,\n    \"section130Agreement\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v2/{{slug}}/calculate-charge",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"{{slug}}",
+								"calculate-charge"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "billrun",
+			"item": [
+				{
+					"name": "01-create-bill-run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    pm.environment.set('billRunId', pm.response.json().billRun.id)",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"region\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v2/{{slug}}/bill-runs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"{{slug}}",
+								"bill-runs"
+							]
+						},
+						"description": "This endpoint triggers creation of a bill run record for a region. Bill run contains no transactions on creation."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"region\": \"A\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/:regime/billruns",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										":regime",
+										"billruns"
+									],
+									"variable": [
+										{
+											"key": "regime"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"billRun\": {\n  \"id\": \"2bbbe459-966e-4026-b5d2-2f10867bdddd\",\n  \"billRunNumber\": 10004\n }\n}"
+						}
+					]
+				},
+				{
+					"name": "02-add-bill-run-transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"periodStart\": \"01-APR-2018\",\n    \"periodEnd\": \"31-MAR-2019\",\n    \"credit\": true,\n    \"billableDays\": 310,\n    \"authorisedDays\": 365,\n    \"volume\": \"6.22\",\n    \"source\": \"Supported\",\n    \"season\": \"Summer\",\n    \"loss\": \"Low\",\n    \"twoPartTariff\": false,\n    \"compensationCharge\": false,\n    \"eiucSource\": \"Tidal\",\n    \"waterUndertaker\": false,\n    \"regionalChargingArea\": \"Anglian\",\n    \"section127Agreement\": false,\n    \"section130Agreement\": false,\n    \"customerReference\": \"TH230000222\",\n    \"lineDescription\": \"Well at Chigley Town Hall\",\n    \"licenceNumber\": \"TONY/TF9222/38\",\n    \"chargePeriod\": \"01-APR-2018 - 31-MAR-2019\",\n    \"chargeElementId\": \"\",\n    \"batchNumber\": \"TONY10\",\n    \"region\": \"A\",\n    \"areaCode\": \"ARCA\",\n    \"newLicence\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v2/{{slug}}/bill-runs/bb8e2653-b6ae-4c92-a1ca-8c74a1a07099/transactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"{{slug}}",
+								"bill-runs",
+								"bb8e2653-b6ae-4c92-a1ca-8c74a1a07099",
+								"transactions"
+							]
+						},
+						"description": "Triggers creation of a transaction and immediately adds it to the specified bill run."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"periodStart\": \"01-APR-2019\",\n    \"periodEnd\": \"31-MAR-2020\",\n    \"credit\": false,\n    \"billableDays\": 310,\n    \"authorisedDays\": 365,\n    \"volume\": \"6.22\",\n    \"source\": \"Supported\",\n    \"season\": \"Summer\",\n    \"loss\": \"Low\",\n    \"twoPartTariff\": false,\n    \"compensationCharge\": false,\n    \"eiucSource\": \"Tidal\",\n    \"waterUndertaker\": false,\n    \"regionalChargingArea\": \"Anglian\",\n    \"section127Agreement\": false,\n    \"section130Agreement\": false,\n    \"customerReference\": \"TH230000222\",\n    \"lineDescription\": \"Well at Chigley Town Hall\",\n    \"licenceNumber\": \"TONY/TF9222/37\",\n    \"chargePeriod\": \"01-APR-2018 - 31-MAR-2019\",\n    \"chargeElementId\": \"\",\n    \"batchNumber\": \"TONY10\",\n    \"region\": \"W\",\n    \"areaCode\": \"ARCA\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/:regime/billruns/:billrunId/transactions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										":regime",
+										"billruns",
+										":billrunId",
+										"transactions"
+									],
+									"variable": [
+										{
+											"key": "regime"
+										},
+										{
+											"key": "billrunId"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"transaction\": {\n  \"id\": \"fd88e6c5-8da8-4e4f-b22f-c66554cd5bf3\"\n }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "transaction-performance",
+			"item": [
+				{
+					"name": "01-create-bill-run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Returns correct code', () => {",
+									"    pm.expect(pm.response.code).to.equal(201)",
+									"})",
+									"",
+									"if (pm.response.code === 201) {",
+									"    pm.environment.set('billRunId', pm.response.json().billRun.id)",
+									"",
+									"    const customers = [\"TH000000001\", \"TH000000002\"]",
+									"    const financialYears = [",
+									"        { periodStart: \"01-APR-2017\", periodEnd: \"31-MAR-2018\" },",
+									"        { periodStart: \"01-APR-2018\", periodEnd: \"31-MAR-2019\" }",
+									"    ]",
+									"    const licences = [",
+									"        \"SROC/TF9222/01\",",
+									"        \"SROC/TF9222/02\",",
+									"        \"SROC/TF9222/03\",",
+									"        \"SROC/TF9222/04\",",
+									"        \"SROC/TF9222/05\"",
+									"    ]",
+									"",
+									"    // We have 2 customers each with 2 financial years and 5 distinct licences. This results",
+									"    // in 10 distinct requests. We repeat each 5 times which results in 100 transactions. We",
+									"    // create an array containing an object for each transaction request. We'll then iterate",
+									"    // through this in the pre-request script of 02-add-bill-run-transaction",
+									"    const transactions = []",
+									"    for (var customer of customers) {",
+									"        for (var year of financialYears) {",
+									"            for (var licence of licences) {",
+									"                for (let i = 0; i < 5; i++) {",
+									"                    // Use the mod operator to divide i by 2. If there is a remainder we set",
+									"                    // credit to false. If no remainder we set it to true. This means for",
+									"                    // every 5 transaction 3 will be debits and 2 credits",
+									"                    const credit = (i % 2) === 0 ? true : false",
+									"                    const transaction = {",
+									"                        customerReference: customer,",
+									"                        periodStart: year.periodStart,",
+									"                        periodEnd: year.periodEnd,",
+									"                        chargePeriod: `${year.periodStart} - ${year.periodEnd}`,",
+									"                        licenceNumber: licence,",
+									"                        credit: credit",
+									"                    }",
+									"                    transactions.push(transaction)",
+									"                }",
+									"            }",
+									"        }",
+									"    }",
+									"",
+									"    pm.variables.set(\"billRunTransactions\", JSON.stringify(transactions))",
+									"    // transactionIndex will be used to track the 100 requests we are sending to to the",
+									"    // create bill run transaction endpoint",
+									"    pm.variables.set(\"transactionIndex\", 0)",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"region\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v2/{{slug}}/bill-runs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"{{slug}}",
+								"bill-runs"
+							]
+						},
+						"description": "This endpoint triggers creation of a bill run record for a region. Bill run contains no transactions on creation."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"region\": \"A\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/:regime/billruns",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										":regime",
+										"billruns"
+									],
+									"variable": [
+										{
+											"key": "regime"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"billRun\": {\n  \"id\": \"2bbbe459-966e-4026-b5d2-2f10867bdddd\",\n  \"billRunNumber\": 10004\n }\n}"
+						}
+					]
+				},
+				{
+					"name": "02-add-bill-run-transaction",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Fetch the test transactions generated in 01-create-bill-run and the current transaction",
+									"// index and pull the transaction data out of the list",
+									"",
+									"const billRunTransactions = JSON.parse(pm.variables.get('billRunTransactions'))",
+									"let transactionIndex = parseInt(pm.variables.get('transactionIndex'))",
+									"const transaction = billRunTransactions[transactionIndex]",
+									"",
+									"// Then set our variables ready for inclusion in the request we are about to send but only ",
+									"if (transaction) {",
+									"    pm.variables.set('customerReference', transaction.customerReference)",
+									"    pm.variables.set('periodStart', transaction.periodStart)",
+									"    pm.variables.set('periodEnd', transaction.periodEnd)",
+									"    pm.variables.set('chargePeriod', transaction.chargePeriod)",
+									"    pm.variables.set('licenceNumber', transaction.licenceNumber)",
+									"    pm.variables.set('credit', transaction.credit)",
+									"",
+									"    postman.setNextRequest(\"02-add-bill-run-transaction\")",
+									"}",
+									"",
+									"// Increment our index and save it",
+									"transactionIndex = transactionIndex + 1",
+									"pm.variables.set('transactionIndex', transactionIndex)",
+									"",
+									"console.log(`Sending request number ${transactionIndex} of ${billRunTransactions.length}`)",
+									"",
+									"// Without this bit of code we get 101 transaction requests. It's related to confusion of",
+									"// the request being a 'thing' in the postman collection, but us using it to programmatically",
+									"// create additional ones.",
+									"if (transactionIndex >= billRunTransactions.length) {",
+									"    postman.setNextRequest(null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Returns correct code', () => {",
+									"    pm.expect(pm.response.code).to.equal(201)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"periodStart\": \"{{periodStart}}\",\n    \"periodEnd\": \"{{periodEnd}}\",\n    \"credit\": {{credit}},\n    \"billableDays\": 310,\n    \"authorisedDays\": 365,\n    \"volume\": \"6.22\",\n    \"source\": \"Supported\",\n    \"season\": \"Summer\",\n    \"loss\": \"Low\",\n    \"twoPartTariff\": false,\n    \"compensationCharge\": false,\n    \"eiucSource\": \"Tidal\",\n    \"waterUndertaker\": false,\n    \"regionalChargingArea\": \"Anglian\",\n    \"section127Agreement\": false,\n    \"section130Agreement\": false,\n    \"customerReference\": \"{{customerReference}}\",\n    \"lineDescription\": \"Well at Chigley Town Hall\",\n    \"licenceNumber\": \"{{licenceNumber}}\",\n    \"chargePeriod\": \"{{chargePeriod}}\",\n    \"chargeElementId\": \"\",\n    \"batchNumber\": \"TONY10\",\n    \"region\": \"A\",\n    \"areaCode\": \"ARCA\",\n    \"newLicence\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v2/{{slug}}/bill-runs/{{billRunId}}/transactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"{{slug}}",
+								"bill-runs",
+								"{{billRunId}}",
+								"transactions"
+							]
+						},
+						"description": "Triggers creation of a transaction and immediately adds it to the specified bill run."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"periodStart\": \"01-APR-2019\",\n    \"periodEnd\": \"31-MAR-2020\",\n    \"credit\": false,\n    \"billableDays\": 310,\n    \"authorisedDays\": 365,\n    \"volume\": \"6.22\",\n    \"source\": \"Supported\",\n    \"season\": \"Summer\",\n    \"loss\": \"Low\",\n    \"twoPartTariff\": false,\n    \"compensationCharge\": false,\n    \"eiucSource\": \"Tidal\",\n    \"waterUndertaker\": false,\n    \"regionalChargingArea\": \"Anglian\",\n    \"section127Agreement\": false,\n    \"section130Agreement\": false,\n    \"customerReference\": \"TH230000222\",\n    \"lineDescription\": \"Well at Chigley Town Hall\",\n    \"licenceNumber\": \"TONY/TF9222/37\",\n    \"chargePeriod\": \"01-APR-2018 - 31-MAR-2019\",\n    \"chargeElementId\": \"\",\n    \"batchNumber\": \"TONY10\",\n    \"region\": \"W\",\n    \"areaCode\": \"ARCA\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/:regime/billruns/:billrunId/transactions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										":regime",
+										"billruns",
+										":billrunId",
+										"transactions"
+									],
+									"variable": [
+										{
+											"key": "regime"
+										},
+										{
+											"key": "billrunId"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"transaction\": {\n  \"id\": \"fd88e6c5-8da8-4e4f-b22f-c66554cd5bf3\"\n }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns correct code\", () => {",
+							"    pm.expect(pm.response.code).to.equal(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{systemToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Use to automate refreshing the AWS cognito bearer token in Postman",
+					"//",
+					"// Thanks to the following sources for helping to put this",
+					"// together",
+					"// https://nicolaswidart.com/blog/automatically-set-authentication-tokens-in-postman-requests",
+					"// https://medium.com/@allen.helton/how-to-automate-oauth2-token-renewal-in-postman-864420d381a0",
+					"// https://stackoverflow.com/a/55614206/6117745",
+					"// https://docs.aws.amazon.com/cognito/latest/developerguide/token-endpoint.html",
+					"",
+					"const sdk = require('postman-collection')",
+					"",
+					"// We need to support requests against endpoints that require different",
+					"// credentials. We keep the code generic by referencing the environment",
+					"// variables that hold those credentials using these variables. We default",
+					"// to the 'system' versions as they will be used in the majority of cases.",
+					"let tokenVar = 'systemToken'",
+					"let tokenTimestampVar = 'systemTokenTimestamp'",
+					"let tokenExpiresInVar = 'systemExpiresIn'",
+					"let oauthUserVar = 'systemUser'",
+					"let oauthPassVar = 'systemPass'",
+					"",
+					"const authServiceUrl = pm.environment.get('tokenUrl')",
+					"",
+					"if (automateToken()) {",
+					"  console.log('CHA API - Automating token')",
+					"  // Check if the request is to an admin endpoint. It includes so update the variables",
+					"",
+					"  if (requestRequiresAdmin()) {",
+					"    updateEnvironmentReferencesToAdmin()",
+					"    console.log('CHA API - Admin path determined. Using admin env vars.')",
+					"  }",
+					"",
+					"  if (tokenRefreshNeeded()) {",
+					"    console.log('CHA API - Refresh of token needed')",
+					"    refreshToken()",
+					"  }",
+					"}",
+					"",
+					"function automateToken () {",
+					"  let automate = pm.environment.get('automateToken') || 'true'",
+					"",
+					"  if (automate === 'true') {",
+					"    automate = true",
+					"  } else {",
+					"    automate = false",
+					"  }",
+					"",
+					"  return automate",
+					"}",
+					"",
+					"function requestRequiresAdmin () {",
+					"  const path = pm.request.url.getPath()",
+					"  const regex = RegExp('(authorised_systems|regime)', 'i')",
+					"",
+					"  return regex.test(path)",
+					"}",
+					"",
+					"// Update the values we use to reference to environment variables",
+					"// to use the admin alternatives",
+					"function updateEnvironmentReferencesToAdmin () {",
+					"  tokenVar = 'adminToken'",
+					"  tokenTimestampVar = 'adminTokenTimestamp'",
+					"  tokenExpiresInVar = 'adminExpiresIn'",
+					"  oauthUserVar = 'adminUser'",
+					"  oauthPassVar = 'adminPass'",
+					"}",
+					"",
+					"// Compares the current token's timestamp against the current time",
+					"// in UTC. If the difference in milliseconds is greater than",
+					"// tokenExpiresInAsMilliseconds() then a refresh is needed",
+					"function tokenRefreshNeeded () {",
+					"  // Date.now() returns the number of milliseconds since 1970-01-01",
+					"  const difference = (Date.now() - timestampAsMilliseconds())",
+					"",
+					"  return difference >= tokenExpiresInAsMilliseconds()",
+					"}",
+					"",
+					"// When we successfully request a token we record a timestamp",
+					"// in the environment variables.",
+					"function timestampAsMilliseconds () {",
+					"  // Set a default in case we don't have a timestamp in the env vars",
+					"  let result = Date.UTC(2010, 0, 1)",
+					"  const tokenTimestamp = pm.environment.get(tokenTimestampVar)",
+					"",
+					"  if (tokenTimestamp) {",
+					"    result = tokenTimestamp",
+					"  }",
+					"",
+					"  return result",
+					"}",
+					"",
+					"// When we successfully request a token we record how long the token",
+					"// will be valid for (expressed as seconds) in the environment variables.",
+					"// As we need to deal in milliseconds this function takes that value (or",
+					"// a default if the env var doesn't exist) and converts it to millseconds.",
+					"function tokenExpiresInAsMilliseconds () {",
+					"  // Set a default in case we don't have a timestamp in the env vars",
+					"  let result = 3600",
+					"  const tokenExpiresIn = pm.environment.get(tokenExpiresInVar)",
+					"",
+					"  if (tokenExpiresIn) {",
+					"    result = tokenExpiresIn",
+					"  }",
+					"",
+					"  return result * 1000",
+					"}",
+					"",
+					"function encodedKeys () {",
+					"  const keys = pm.environment.get(oauthUserVar) + ':' + pm.environment.get(oauthPassVar)",
+					"",
+					"  return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(keys));",
+					"}",
+					"",
+					"function refreshToken () {",
+					"  const tokenRequest = new sdk.Request({",
+					"    url: authServiceUrl,",
+					"    method: 'POST',",
+					"    header: [",
+					"      new sdk.Header({",
+					"        key: 'content-type',",
+					"        value: 'application/x-www-form-urlencoded'",
+					"      }),",
+					"      new sdk.Header({",
+					"        key: 'acccept',",
+					"        value: 'application/json'",
+					"      }),",
+					"      new sdk.Header({",
+					"        key: 'Authorization',",
+					"        value: 'Basic ' + encodedKeys()",
+					"      })",
+					"    ],",
+					"    body: {",
+					"      mode: 'urlencoded',",
+					"      urlencoded: [",
+					"        { key: 'grant_type', value: 'client_credentials' },",
+					"      ]",
+					"    }",
+					"  })",
+					"",
+					"  pm.sendRequest(tokenRequest, function (err, response) {",
+					"    if (err) {",
+					"      throw err",
+					"    }",
+					"",
+					"    if (response.code !== 200) {",
+					"      throw new Error('Could not log in.')",
+					"    }",
+					"",
+					"    pm.environment.set(tokenVar, response.json().access_token)",
+					"    pm.environment.set(tokenExpiresInVar, response.json().expires_in)",
+					"    pm.environment.set(tokenTimestampVar, Date.now());",
+					"    console.log(`New token has been set: ${response.json().access_token}`);",
+					"  })",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "slug",
+			"value": "wrls"
+		}
+	]
+}

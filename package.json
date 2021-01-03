@@ -1,0 +1,29 @@
+{
+  "name": "sroc-cma-acceptance-tests",
+  "version": "1.0.0",
+  "description": "Automated acceptance tests for the SROC Charging Module API",
+  "homepage": "https://github.com/DEFRA/sroc-cma-acceptance-tests",
+  "author": "Defra",
+  "license": "OGL-UK-3.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DEFRA/sroc-cma-acceptance-tests"
+  },
+  "bin": {
+    "cma-tests": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js",
+    "lint": "standard"
+  },
+  "dependencies": {
+    "commander": "^6.2.0",
+    "newman": "^5.2.1",
+    "newman-reporter-htmlextra": "^1.19.6"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
+  }
+}
